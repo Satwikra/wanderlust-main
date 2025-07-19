@@ -1,20 +1,8 @@
 const express=  require("express");
 const router =express.Router();
 const wrapAsync =require("../utils/wrapAsync.js");
-const ExpressError =require("../utils/ExpressError.js");
-const {listingSchema,reviewSchema} =require("../schema.js");
 const Listing = require("../models/listing.js");
-const {isLoggedIn} =require("../middleware.js");
-
-const validateListing =(req,res,next) =>{
-    let {error}= listingSchema.validate(req.body);
-    if(error){
-        let errMsg = error.details.map((el) => el.message).joi(",");
-        throw new ExpressError(400,error);
-    }else{
-        next();
-    }
-};
+const {isLoggedIn, validateListing} =require("../middleware.js");
 
 //Index Route
 router.get("/", wrapAsync(async (req, res) => {
@@ -41,10 +29,9 @@ router.get("/:id",wrapAsync(async (req, res) => {
 
 //Create Route
 router.post("/",isLoggedIn,validateListing, wrapAsync(async (req, res) => {
-    let result=listingSchema.validate(req.body);
   const newListing = new Listing(req.body.listing);
   await newListing.save();
-  req.flash("success","Listing you requested for does not exist");
+  req.flash("success","New Listing Created!");
   res.redirect("/listings");
 })
 );
