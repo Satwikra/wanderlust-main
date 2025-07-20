@@ -18,7 +18,7 @@
 
 
 const mongoose = require("mongoose");
-const Schema=mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const reviewSchema = new mongoose.Schema({
   rating: {
@@ -30,6 +30,14 @@ const reviewSchema = new mongoose.Schema({
   comment: {
     type: String,
     required: true,
+  },
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now
   }
 });
 
