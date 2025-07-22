@@ -347,12 +347,6 @@ const sampleListings = [
     location: "Costa Rica",
     country: "Costa Rica",
   },
-  {
-  title: "ee",
-  image: "some-image-url",
-  price: "Not available",
-  // other fields...
-}
 ];
 
 module.exports = { data: sampleListings };

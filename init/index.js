@@ -18,6 +18,12 @@ async function main() {
 
 const initDB = async () => {
   await Listing.deleteMany({});
+  initData.data = initData.data.map((obj) => ({
+    ...obj,
+    owner:"687a0defd215b9476a1da62a",
+    image: obj.image?.url || obj.image,
+    price: typeof obj.price === 'number' ? obj.price : 1000
+  }));
   await Listing.insertMany(initData.data);
   console.log("data was initialized");
 };
